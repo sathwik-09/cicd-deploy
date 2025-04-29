@@ -1,7 +1,5 @@
-## Build the docker image
-## Push the docker image to the docker hub
-
 name: Deploy Backend
+
 on:
   push:
     branches: [ "main" ]
@@ -26,3 +24,14 @@ jobs:
           file: ./docker/Dockerfile.backend
           push: true
           tags: sathwik09/deploy-mono-cicd-backend:latest
+
+      - name: Deploy to VM
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/ssh_key
+          chmod 600 ~/ssh_key
+          ssh -o StrictHostKeyChecking=no -i ~/ssh_key ubuntu@3.110.175.103 -t "
+            docker stop user_backend || true
+            docker rm user_backend || true
+            docker pull sathwik09/deploy-mono-cicd-backend:latest
+            docker run --name user_backend -d -p 8080:8080 sathwik09/deploy-mono-cicd-backend:latest
+          "
