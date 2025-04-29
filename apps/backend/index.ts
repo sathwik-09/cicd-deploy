@@ -8,7 +8,7 @@ app.use(express.json());
 app.get("/users", (req, res) => {
   prisma.user.findMany()
     .then(users => {
-      
+
       res.json(users);
     })
     .catch(err => {
@@ -20,7 +20,7 @@ app.post("/user", (req, res) => {
   const { email, password } = req.body;
   
   if (!email || !password) {
-    res.status(400).json({ error: "Username and password are required" });
+    res.status(401).json({ error: "Username and password are required" });
     return
   }
 
