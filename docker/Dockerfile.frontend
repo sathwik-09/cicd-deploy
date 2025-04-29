@@ -2,21 +2,26 @@ FROM oven/bun:latest
 
 WORKDIR /user/src/app
 
+# Accept build-time variable
 ARG DATABASE_URL
 
+# Make it available to RUN and CMD
+ENV DATABASE_URL=$DATABASE_URL
+
+# Copy project files
 COPY ./packages ./packages
 COPY ./bun.lock ./bun.lock
-
 COPY ./package-lock.json ./package-lock.json
 COPY ./turbo.json ./turbo.json
 COPY ./apps/web ./apps/web
-
-
 COPY . .
 
+# Install dependencies and generate Prisma client
 RUN bun install
-RUN bun run db:generate 
-RUN DATABASE_URL=${DATABASE_URL} bun run build
+RUN bun run db:generate
+
+# Now this will work, since DATABASE_URL is available as ENV
+RUN bun run build
 
 EXPOSE 4000
 
