@@ -5,6 +5,7 @@ WORKDIR /user/src/app
 # Accept build-time variable
 ARG DATABASE_URL
 
+
 # Make it available to RUN and CMD
 ENV DATABASE_URL=$DATABASE_URL
 
@@ -20,8 +21,10 @@ COPY . .
 RUN bun install
 RUN bun run db:generate
 
+RUN echo "DATABASE_URL is $DATABASE_URL"
+
 # Now this will work, since DATABASE_URL is available as ENV
-RUN bun run build
+#RUN bun run build
 
 EXPOSE 4000
 
