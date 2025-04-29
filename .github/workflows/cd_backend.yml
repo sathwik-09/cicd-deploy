@@ -25,4 +25,4 @@ jobs:
           context: .
           file: ./docker/Dockerfile.backend
           push: true
-          tags: sathwik/deploy-mono-cicd-backend:latest
+          tags: sathwik09/deploy-mono-cicd-backend:latest
