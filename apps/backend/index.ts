@@ -8,6 +8,7 @@ app.use(express.json());
 app.get("/users", (req, res) => {
   prisma.user.findMany()
     .then(users => {
+      
       res.json(users);
     })
     .catch(err => {
