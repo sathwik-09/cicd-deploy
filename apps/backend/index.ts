@@ -12,7 +12,7 @@ app.get("/users", (req, res) => {
       res.json(users);
     })
     .catch(err => {
-      
+
       res.status(500).json({ error: err.message });
     });
 })
@@ -21,7 +21,7 @@ app.post("/user", (req, res) => {
   const { email, password } = req.body;
   
   if (!email || !password) {
-    res.status(401).json({ error: "Username and password are required" });
+    res.status(400).json({ error: "Username and password are required" });
     return
   }
 
