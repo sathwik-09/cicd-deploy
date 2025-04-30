@@ -11,8 +11,10 @@ export default async function Home() {
 }
 
 
-export const dynamic = "force-dynamic";
+//export const dynamic = "force-dynamic";
 
 // or
 
-// export const revalidate = 60;
+export const revalidate = 60;
+
+
